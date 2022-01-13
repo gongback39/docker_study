@@ -172,17 +172,9 @@ docker hub에 공개되어 있는 이미지가 모두 안전한 것은 아님, �
 :-----:|:---------:
 --password, -p|비밀번호
 --username, -u|사용자명
- *에시
-<pre><code>$ docker login
-Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
-Username: gongback39 
-Password: 
-WARNING! Your password will be stored unencrypted in /home/nizejr/.docker/config.json.
-Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credentials-store
-
-Login Succeeded
- </code></pre>
+옵션을 지정하지 않으면 사용자명과 비밀번호를 물어봄
+서버명을 지정하지 않을시 Docker Hub에 엑서스
+다른 황경에 docker repository가 있는 경우 서버명 지정
 
 ## 이미지 업로드
 <pre><code> docker image push 이미지명[:태그명] </code></pre>
@@ -192,6 +184,7 @@ Login Succeeded
 ## Docker Hub에서 로그아웃
 <pre><code> docker logout [서버명] </code></pre>
 서버명을 지정하지 않았을 떄는 Ducker Hub에 억세스함
+다른 황경에 docker repository가 있는 경우 서버명 지정
 
 <pre><code> </code></pre>
 옵션|설명
