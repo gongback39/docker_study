@@ -181,8 +181,82 @@ NAMES|컨테이너 이름
 .Mounts|볼륨 마운트
 .Networks|네트워크명
 
+*예시
+<pre><code>$ docker container ls -a --format "{{.Names}}: {{.Status}}"
+condescending_khayyam: Up 3 hours
+gifted_turing: Up 4 hours
+test1: Exited (0) 4 hours ago
+webserver: Exited (128) 19 hours ago
+57dca1eb0756: Created
+thirsty_euclid: Exited (0) 2 days ago
+</code></pre>
+*표형식
+<pre><code>$ docker container ls -a --format "table {{.Names}}\t{{.Status}}\t {{.Mounts}}"
+NAMES                   STATUS                       MOUNTS
+condescending_khayyam   Up 3 hours                   
+gifted_turing           Up 4 hours                   
+test1                   Exited (0) 4 hours ago       
+webserver               Exited (128) 19 hours ago    
+57dca1eb0756            Created                      
+thirsty_euclid          Exited (0) 2 days ago   
+</code></pre>
 
+### 7) 컨테이너 가동 확인
+<pre><code> docker container stats [컨테이너 식별자] </code></pre>
+*결과
 
-<pre><code> </code></pre>
+항목|설명
+:-----:|:---------:
+CONTAINER ID|컨테이너 식별자
+NAME|컨테이너명
+CPU %|cpu사용률
+MEM USAGE/LIMIT|메모리 사용량/컨테이너에서 사용할 수 있는 메모리 제한
+MEM %|메모리 사용률
+NET I/O|네트워크 I/O
+BLOCK I/O|블록 I/O
+PIDS|PID
+
+상태 확인이 끝나면 ctrl+c를 눌러 명령 종료
+
+또한 컨테이너에서 실행중인 프로세스를 확인할때는
+<pre><code> docker container top [컨테이너명] </code></pre>
+을 사용
+
+### 8) 컨테이너 시작
+<pre><code> docker container start [옵션] <컨테이너 식별자> [컨테이너 식별자] </code></pre>
 옵션|설명
 :-----:|:---------:
+--attach, -a|표준 출력, 표준 오류 출력을 열음
+--interactive, -i|컨테이너의 표준 입력을 열음
+
+### 9)컨테이너 정지
+<pre><code> docker container stop [옵션] <컨테이너 식별자> [컨테이너 식별자] </code></pre>
+* 옵션
+
+옵션|설명
+:-----:|:---------:
+--time, -t|컨텡이너의 정지 시간을 지정(기본값: 10초)
+
+### 10) 컨테이너 재시작
+<pre><code> docker container restart [옵션] <컨테이너 식별자> [컨테이너 식별자] </code></pre>
+* 옵션
+
+옵션|설명
+:-----:|:---------:
+--time, -t|컨텡이너의 정지 시간을 지정(기본값: 10초)
+
+### 11) 컨테이너 삭제
+<pre><code> docker container rm [옵션] <컨테이너 식별자> [컨테이너 식별자] </code></pre>
+* 옵션
+
+옵션|설명
+:-----:|:---------:
+--force, -f|실행중인 컨테이너를 강제로 삭제
+--volumes, -v|할당한 볼륨 삭제
+
+정지중인 모든 컨테이너를 삭제(정지 중인 것만을 삭제)하려면
+<pre><code> docker container prune </code></pre>
+를 사용 
+
+### 12) 컨테이너 중단/재개
+<pre><code> docker container pause/unpause <컨테이너 식별자> </code></pre>
