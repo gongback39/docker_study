@@ -105,13 +105,29 @@ inux</code></pre>
 <pre><code>$ docker image inspect --format="{{ .containerConfig.Image}}" centos:7
 sha256:5a28642a68c5af8083107fca9ffbc025179211209961eae9b1f40f928331fa90</code></pre>
 
-## 이미지 태그 성정
-<pre><code>  </code></pre>
+## 이미지 태그 설정
+이미지 태그에는 식병하기 쉬운 버전 명을 붙이는 것이 일반적, 또한 Ducker Hub에 작성한 이미지를 등록하려면 이미지에 사용자명을 붙여야함
+<pre><code> docker image tag 소스_이미지명[:태그명] <도커 허브 사용자명>/타겟_이미지명[:태그명] </code></pre>
+*예시
+<pre><code>$ docker image ls
+REPOSITORY    TAG       IMAGE ID       CREATED        SIZE
+ubuntu        latest    d13c942271d6   6 days ago     72.8MB
+nginx         latest    605c77e624dd   2 weeks ago    141MB
+hello-world   latest    feb5d9fea6a5   3 months ago   13.3kB
+
+$ docker image tag nginx  gongback39/webserver:1.0
+
+$ docker image ls
+REPOSITORY             TAG       IMAGE ID       CREATED        SIZE
+ubuntu                 latest    d13c942271d6   6 days ago     72.8MB
+nginx                  latest    605c77e624dd   2 weeks ago    141MB
+gongback39/webserver   1.0       605c77e624dd   2 weeks ago    141MB
+hello-world            latest    feb5d9fea6a5   3 months ago   13.3kB
+</code></pre>
+*태그된 이미지와 원래 이미지의 IMAGE ID가 같음
+즉 실체가 똑같다.
 
 
-# docker를 이용한 웹서버 구축 (Nginx)
-리버스 프록시나 로드 밸런서와 같은 기능을 갖음
-## docker 이미지 다운로드 
 
 
 <pre><code> </code></pre>
