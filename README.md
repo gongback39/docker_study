@@ -186,6 +186,8 @@ Docker 이미지를 관리하는 스토리지 디바이스
 * OverlayFS
 * ZFS
 
+***
+
 # 1. docker 시작
 ## docker 설치
 >apt 업데이트
@@ -383,6 +385,8 @@ docker hub에 공개되어 있는 이미지가 모두 안전한 것은 아님,
 서버명을 지정하지 않았을 떄는 Ducker Hub에 억세스함
 
 다른 황경에 docker repository가 있는 경우 서버명 지정
+
+***
 
 # 3. Docker 컨테이너 
 >컨테이너의 라이프 사이클
