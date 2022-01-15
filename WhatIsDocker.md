@@ -75,4 +75,71 @@ Docker는 하나의 linux커널을 여러개의 컨테이너에서 공유하고 
 그리고 이를 실행하기 위해 리눅스 커널 기능 기술이 사용.
 
 ## Docker의 작동 구조
+#### 컨테이너를 구획화 하는 장치(namespace)
+docekr는 컨터이너라는 독립된 환경을 만들고, linux 커널의 namespace라는 기능을 사용하여 그 컨테이너를 구획화하여 애플리케이션의 실행환경을 만듦
 
+namespace란 한 덩어리의 데이터에 이름을 붙여 분할함으로써 충돌 가능성을 줄이고, 쉽게 참조할 수 있게 하는 개념임.
+
+이름과 연결된실체는 그 이름이 어떤 namespace에 속해있는지 고유하게 정해져, namespace가 다르면 동일한 이름이라도 다른 실체로 처리됨.
+
+다음과 같은 linux의 오브젝트에 이름을 붙여 다음과 같은 6개의 독립된 환경을 구축할 수 있음.
+
+> PID namespace
+
+PID란 Linux에서 각 프로세스에 할당된 고유한 ID를 말함. PID namespace는 PID와 프로세스를 격리시켜 namespace가 다른 프로세스 끼리 서로 액세스 할 수 없도록 함.
+
+>Network namespace
+
+Network namespace는 네트워크 디바이스, IP주소, 포트 번호, 라우팅 테이블, 필터링 테이블 등과 같은 네트워크 리소스를 격리된 namespace마다 독립적으로 가질 수있음
+
+즉 호스트 OS상에서 사용중인 포트가 있더라도 컨테이너 안에서 동일한 번호의 포트를 사용할 수 있음
+
+>UID namespace
+
+UID namespace는 UID(사용자 ID), GID(그룹 ID)를 namespace별로 독립적으로 가질 수 있음.
+
+namespace와 호스트 OS상의 ID가 서로 연결되어 서로 다른 UID/GID를 가질 수 있어, ID를 격리시킴으로서 뛰어난 보안 환경을 가질 수 있음
+
+>MOUNT namespace
+
+마운트란 컴퓨터에 연결된 기기나 기억장치를 OS에 인식시켜 이용 가능한 상태로 만드는 것.
+
+MOUNT namespace는 마운트 조작을 하면 namespace 안에 격리된 파일 시스템 트리를 만듬.
+
+>UTS namespace
+
+UTS namespace는 namespace 별로 호스트명이나 도메인 명을 독자적으로 가질 수 있음.
+
+>IPC namespace
+
+IPC namespace는 프로세스 간의 통신(IPC) 오브젝트를 namespace별로 독립적으로 가질 수 있음.
+
+*IPC는 system V 프로세스 간의 통신 오브젝트라고 하는 공유 메모리나 세마포어/메시지 큐를 말함
+  * 사마포어란 프로세스가 요구하는 자원 관리에 이용되는 베타제어 장치.
+  * 메시지 큐란 여러 프로세스 간에서 비동기 통신을 할때 사용되는 큐잉 장치.
+
+#### 릴리스 관리 장치(cgroups)
+Docker에서는 물리 머신 상의 자원을 여러 컨테이너가 공유하여 작동.
+
+이때 리눅스 커널의 기능인 cgroups(control group) 기능을 사용하여 자원의 할당을 관리.
+
+>linux에서 프로그램을 프로세스로서 실행
+>플세스는 하나 이상의 스레드 모음으로 동작
+
+cgroups는 프로세스와 스레드를 그룹화하여 그 그룹 안에 존재하는 프로세스와 스레드에 대한 관리를 수행하기 위한 기능
+
+* cgroups로 관리할 수 있는 일
+
+항목|설명
+:---:|:---:
+cpu|cpu사용량을 제한
+cpuacct|cpu 사용량 통계 정보 제공
+cpuset|cpu나 메모리 배치 제어
+memory|메모리나 스왑 사용량을 제한
+devices|디바이스에 대한 액세스 허가/거부
+freezer|그룹에 속한 프로세스 정지/재개
+net_cls|네트워크 제어 태그를 부가
+blkio|블록 디바이스 입출력량 제어
+
+cgroups는 계층구조를 사용하여 프로세스를 그룹화하여 관리가 가능.
+<img src="./img/cgroups.png>
