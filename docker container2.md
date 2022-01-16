@@ -67,6 +67,11 @@ $ docker container inspect sample
 --ipv6|IPv6 네트워크를 유효화할지 말지(true/false)
 -label|네트워크에 설정하는 라벨
 
+#### 3) 네트워크 연결
+
+Docker 컨테이너를 Docker 네트워크에 연결
+
+<pre><code> docker network connet [옵션] 네트워크 컨테이너 </code></pre>
 
 <pre><code> </code></pre>
 옵션|설명
