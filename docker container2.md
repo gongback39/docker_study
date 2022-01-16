@@ -72,6 +72,60 @@ $ docker container inspect sample
 Docker 컨테이너를 Docker 네트워크에 연결
 
 <pre><code> docker network connet [옵션] 네트워크 컨테이너 </code></pre>
+옵션|설명
+:---:|:---:
+--ip|IPv4주소
+--ip6|IPv6 주소
+--alias|앨리어스명
+--link|다른 컨테이너에 대한 링크
+
+<pre><code> docker network connect web-network webfront </code></pre>
+
+* 네트워크에 대한 연결은 컨테이너 시작 시에 할 수도 있음
+>베이스 이미지가 nginx고 webap라는 이름의 컨테이너를 web-network에 만듦
+<pre><code> docker container run -itd --name=webap --net=web-network nginx </code></pre>
+
+#### 4) 네트워크 상세 정보 확인
+
+<pre><code> docker network inspect [옵션] 네트워크 </code></pre>
+
+#### 5) 네트워크 삭제 
+
+<pre><code> docker network rm [옵션] 네트워크 </code></pre>
+단, 네트워크를 삭제하려면 docker network disconnect명령을 사용하여 연결중인 모든 컨테이너와의 연결을 해제해야함
+
+## 5. 가동중인 Docker 컨테이너 조작
+
+#### 가동 컨테이너 연결
+가동중인  컨테이너에 연결할 때
+<pre><code> docker container attach </code></pre>
+명령을 사용
+
+#### 가동 컨테이너에서 프로세스 실행
+웹서버와 같이 백그라운드에서 실행되고 있는 컨테이너에 액세스하고 싶을 떄 docker container attach명령으로 연결해도 쉘이 작동하지 않는 경우 명령을 접수할 수 없는데 이때 docker container exec 명령을 사용하여 임의의 명령을 실행 가능.
+<pre><code> docker container exec [옴션] <컨테이너 식별자> <실행할 명령> [인수] </code></pre>
+옵션|설명
+:---:|:---:
+--detech, -d|명령을 백그라운드에서 실행
+--interactive, -i|컨테이너의 표준 입력을 염
+--tty, -t|tty(단말 디바이스)를 사용
+--user, -u|사용자명 지정
+
+<pre><code>$ docker container exec -it webserver /bin/bash
+root@4da054c05e5e:/#
+</code></pre>
+> 명령 직접 실행
+<pre><code>
+$ docker container exec -it webserver bin/echo "hello world"
+hello world
+</code></pre>
+
+#### 가동 컨테이너의 프로세스 확인
+<pre><code> docker container top </code></pre>
+
+#### 가동 컨테이너의 포트 전송 확인
+
+
 
 <pre><code> </code></pre>
 옵션|설명
