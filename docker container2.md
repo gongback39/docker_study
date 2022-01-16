@@ -2,6 +2,8 @@
 
 Docker 네트워크를 통해 docker 컨테이너를 통신함
 
+#### 1) 네트워크 목록 표시
+
 > 네트워크의 구성 정보 목록 확인
 <pre><code> docker network ls [옵션] </code></pre>
 옵션|설명
@@ -51,6 +53,20 @@ $ docker container inspect sample
     }
 ]
 </code></pre>
+
+#### 2) 네트워크 작성
+
+>새로운 네트워크 작성
+
+<pre><code> dockernetwork create [옵션] 네트워크 </code></pre>
+옵션|설명
+:---:|:---:
+--driver, -d|네트워크 브리지 또는 오버레이(기본값: bridge)
+--ip-range|컨테이너에 할당하는 IP주소의 범위설정
+--subnet|서브넷을 CIDR 형식으로 지정
+--ipv6|IPv6 네트워크를 유효화할지 말지(true/false)
+-label|네트워크에 설정하는 라벨
+
 
 <pre><code> </code></pre>
 옵션|설명
