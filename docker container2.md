@@ -124,8 +124,78 @@ hello world
 <pre><code> docker container top </code></pre>
 
 #### 가동 컨테이너의 포트 전송 확인
+<pre><code> docker container port </code></pre>
+*예시
+<pre><code> $ docker container port webserver
+80/tcp -> 0.0.0.0:80
+80/tcp -> :::80
+</code></pre>
 
+#### 컨테이너 이름 변경
+<pre><code> docker container rename </code></pre>
 
+#### 컨테이너 안의 파일 복사
+<pre><code> docker container cp <컨테이너 식별자>:<컨테이너 안의 파일 경로> <호스트 디렉토리의 경로> </code></pre>
+<pre><code> docker container cp <호스트 파일> <컨테이너 식별자>:<컨테이너 안의 파일 경로> </code></pre>
+
+* 예시
+webserver안의 /etc/nginx/nginx.conf 파일을 호스트의 /tmp/etc에 복사
+<pre><code>$ docker container cp webserver:/etc/nginx/nginx.conf /tmp/nginx.conf
+$ ls -la /tmp/nginx.conf
+-rw-r--r-- 1 nizejr docker 648 12월 29 00:40 /tmp/nginx.conf </code></pre>
+
+#### 컨테이너 조작의 차분 확인
+컨테이너 안에서 어떤 조작을 하여 컨테이너가 이미지로부터 생성되었을때와 달라진 점(차분)을 확인
+
+<pre><code> docker container diff <컨테이너 식별자> </code></pre>
+
+* 변경 구분
+구분|설명
+:---:|:---:
+A|파일 추가
+D|파일 삭제
+C|파일 수정
+
+<pre><code>
+$ docker container diff webserver
+C /var
+C /var/cache
+~
+C /etc/nginx/conf.d
+C /etc/nginx/conf.d/default.conf
+</code></pre>
+
+## 6) Docker 이미지 생성
+Docker 컨테이너는 Docker 이미지를 바탕으로 작성하지만 반대로 Docker컨테이너를 바탕으로 Docker 이미지를 작성할 수 있음
+
+#### 컨테이너로부터 이미지 작성
+<pre><code> docker container commit [옵션] <컨테이너 식별자> [이미지명[:태그명]] </code></pre>
+옵션|설명
+:---:|:---:
+--auther, -a|작성자를 지정
+--message, -m|메시지를 지정
+--change, -c|커미트 시 dockerfile 명령을 지정
+--pause, -p|컨테이너를 일시 정지하고 커미트
+
+<pre><code>$ docker container commit -a "gongback39" webserver gongback39/webfront:1.0
+sha256:aba793aa8056bfc8d8279b108302d4ba6d335fcb1d8cb470f0197462e2286817
+$ docker image inspect gongback39/webfront:1.0 | grep Author
+        "Author": "gongback39",
+</code></pre>
+
+#### 컨톄이너를 tar파일로 출력
+Docker에서는 가동중인 컨테이너의 디렉터리/파일을 모아서 tar파일을 만들 수 있음
+
+tar파일을 바탕으로 하여 다른 서버에서 컨테이너를 가동할 수 있음
+
+<pre><code> docker container export <컨테이너 식별자> </code></pre>
+<pre><code>$ docker container export webserver > latest.tar 
+$ ls -la | grep .tar
+-rw-rw-r--  1 nizejr docker 144025600  1월 17 14:34 latest.tar
+</code></pre>
+
+#### tar파일로부터 이미지 작성
+<pre><code> docker image import <파일 또는 URL> | - [이미지명[:태그명]] </code></pre>
 
 <pre><code> </code></pre>
 옵션|설명
