@@ -878,7 +878,7 @@ gongback39/webfront    1.1       35e1dd31ca0e   9 seconds ago   140MB
 <pre><code> docker image load [옵션] </code></pre>
 -i 옵션을 이용해 읽어들일 파일명을 지정할 수 있음
 
-####불필요한 이미지/컨테이너를 일괄 삭제
+#### 불필요한 이미지/컨테이너를 일괄 삭제
 사용하지 않는 이미지, 컨테이너, 볼륨, 네트워크를 일괄적으로 삭제
 <pre><code> docker system prune [옵션] </code></pre>
 옵션|설명
