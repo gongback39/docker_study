@@ -195,8 +195,42 @@ $ ls -la | grep .tar
 </code></pre>
 
 #### tar파일로부터 이미지 작성
+다음 명령을 사용하면 linuxos 이미지의 디렉토리/파일로 부터 Docker이미지를 만들 수 있음
 <pre><code> docker image import <파일 또는 URL> | - [이미지명[:태그명]] </code></pre>
+압축된 디렉토리나 파일도 취급.
 
-<pre><code> </code></pre>
+docker image import 명령으로 지정하 수 있는 파일은 하나이므로 tar명령등으로 파일과 디렉토리를 모아두어야 하며 root권한으로 실행해야 하는 파일은 포함되지 않으므로 주의
+
+docker image import 명령으로 지정할 수 있는 아카이브 파일
+* tar
+* tar.gz
+* tgz
+* bzip
+* tar.xz
+* txz
+
+<pre><code>
+$ cat latest.tar | docker image import - gongback39/webfront:1.1
+sha256:35e1dd31ca0e61d780691ec8d4c68466b95db0bc9b87c89d7cefe94f31a64b17
+$ docker image ls
+REPOSITORY             TAG       IMAGE ID       CREATED         SIZE
+gongback39/webfront    1.1       35e1dd31ca0e   9 seconds ago   140MB
+</pre></code>
+
+#### 이미지 저장
+<pre><code> docker image save [옴션] <저장 파일명> [이미지명] </code></pre>
+저장할 파일명은 -o옵션으로 지정
+
+#### 이미지 읽어 들이기
+<pre><code> docker image load [옵션] </code></pre>
+-i 옵션을 이용해 읽어들일 파일명을 지정할 수 있음
+
+####불필요한 이미지/컨테이너를 일괄 삭제
+사용하지 않는 이미지, 컨테이너, 볼륨, 네트워크를 일괄적으로 삭제
+<pre><code> docker system prune [옵션] </code></pre>
 옵션|설명
 :---:|:---:
+--all, -a|사용하지 않는 리소스를 모두 삭제
+--force, -f|강제적으로 삭제
+
+
