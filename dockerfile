@@ -90,7 +90,40 @@ sample                 1.0       eeb6ee3f44bd   4 months ago   204MB
 
 #### docker 이미지의 레이어 구조
 dockerfile을 빌드하여 docker이미지를 작성하면 dockerfile의 명령별로 이미지를 작성 이에 작성된 여러개의 이미지는 레이어 구조로 되어 있음
+<pre><code>
+From ubuntu:latest
 
+RUN apt-get update && apt-get install -y -q nginx
+
+COPY index.html /usr/share/nginx/html/
+
+CMD ["nginx", "-g", "daemon off;"}
+</code></pre>
+
+<pre><code>
+$ docker build -t webap ~/sample
+Sending build context to Docker daemon   2.56kB
+Step 1/4 : From ubuntu:latest
+ ---> d13c942271d6
+Step 2/4 : RUN apt-get update && apt-get install -y -q nginx
+~
+ ---> 3ada74815bb7
+Step 3/4 : COPY index.html /usr/share/nginx/html/
+ ---> 833d6ece48fd
+Step 4/4 : CMD ["nginx", "-g", "daemon off;"}
+ ---> Running in eeddf68a8fdb
+Removing intermediate container eeddf68a8fdb
+ ---> b14a8627004b
+Successfully built b14a8627004b
+Successfully tagged webap:latest
+</code></pre>
+
+>공통의 베이스 이미지를 바탕으로 여러개의 이미지를 작성한 경우, 베이스 이미지의 레이어가 공유되므로써 디스크의 용량을 효율적으로 이용할 수 있음
+
+## 멀티스테이지 빌드를 사용한 애플리케이션 개발
+제품환경에는 애플리케이션을 실행하기 위해 최소한으로 필요한 실행 모듈만 배치하는 것이 컴퓨팅 리소스를 효율적으로 활용할 수 있고 보안 과점에서 바람직함
+
+<img src="./img/docker multistage.png'>
 
 
 
