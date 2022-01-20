@@ -123,7 +123,56 @@ Successfully tagged webap:latest
 ## 멀티스테이지 빌드를 사용한 애플리케이션 개발
 제품환경에는 애플리케이션을 실행하기 위해 최소한으로 필요한 실행 모듈만 배치하는 것이 컴퓨팅 리소스를 효율적으로 활용할 수 있고 보안 과점에서 바람직함
 
-<img src="./img/docker multistage.png'>
+<img src="./img/docker multistage.png">
+> 학습을 위한 샘플코드 복제
+<pre><code>
+$ git clone https://github.com/asashiho/dockertext2
+$ cd dockertext2/chap05/multi-stage
+</code></pre>
 
+>Dockerfile
+<pre><code>
+# 1. Build Image
+FROM golang:1.13 AS builder
 
+# Install dependencies
+WORKDIR /go/src/github.com/asashiho/dockertext-greet
+RUN go get -d -v github.com/urfave/cli
 
+# Build modules
+COPY main.go .
+RUN GOOS=linux go build -a -o greet .
+
+# ------------------------------
+# 2. Production Image
+FROM busybox
+WORKDIR /opt/greet/bin
+
+# Deploy modules
+COPY --from=builder /go/src/github.com/asashiho/dockertext-greet/ .
+ENTRYPOINT ["./greet"]
+</code></pre>
+
+이 dockerfile은 두개의 부분으로 나뉘어있음
+
+1. 개발환경용 Docker 이미지
+해당 이미지에서는 golang을 베이스 이미지로 작성하고 builder라는 별병을 붙임
+
+그래고 개발에 필요한 버전을 설치하여 로컬 환경에 있는 소스코드를 컨테이너 안으로 복사
+
+이 소스코들를 go build 명령으로 빌드하여 'greet'이라는 이름의 실행가능 바이너리 파일을 작성
+
+2. 제품환경용 Docker 이미지
+busybox를 제품환경용 docker 이미지의 베이스 이미지로 사용함.
+
+busybox는 기본적인 linux명령을 하나의 파일로 모은 것으로 최소한으로 필요한 Linux쉘 환경을 제송하는 경우 이용
+
+그 다음 개발용 환경의 docker이미지로 빌드한 greet라는 이름의 실행가능 바이너리 파일을 제품 환경용 docker 이미지로 복사.
+
+이때 --from 옵션을 사용하여  builder라는 이름의 이미지로부터 복사한다는 것을 선언
+
+마지막으로 복사란 실행 가능 바이너리 파일을 실행하는 명령을 적음
+
+그러므로 2개의 docker이미지를 생성할 수 있는 dockerfile이 생성
+
+#### docker 이미지의 빌드
