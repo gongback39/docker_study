@@ -228,7 +228,7 @@ ENTRYPOINT 명령에서 지정한 명령은 반드시 컨테이너에서 실행.
 
 ENTRYPOINT 명령으로는 실행하고 싶은 명령 자체를 지정하고 CMD명령으로는 그 명령의 인수를 지정하면 컨테이너를 실행했을때의 기본 작동을 결정할 수 있음.
 
-<pre><code> ENTRYPOINT ["top"]
+<pre><code>ENTRYPOINT ["top"]
 CMD ["-d", "10"] </code></pre>
 
 ENTRYPOINT명령으로 top명령을 실행하고 CMD명령으로 갱신간격인 -d 옵션을 10초로 지정합니다.
