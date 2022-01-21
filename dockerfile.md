@@ -198,8 +198,10 @@ Run명령은 이미지를 작성하기 위해 실행하는 명령을 기술하�
 예를 들어 웹서버를 가동시키기 위해 Nginx를 설치하는 명령은 RUN명령을, 설치한 Nginx를 데몬으로서 컨테이너 안에서 상시 작동기키기 위해서는 CMD명령을 사용
 <pre><code> CMD [실행하고 싶은 명령] </code></pre>
 > 1. Exec형식으로 기술
+
 RUN 명령과 같이 JSON배열로 지정
 > 2. shell형식으로 기술 
+
 RUN명령의 구문과 같음.
 
 쉘을 통해 실행하고 싶을 때 사용.
@@ -212,7 +214,8 @@ ENTRYPOINT명령에서 지정한 명령은 dockerfile에서 빌드한 이미지�
 
 > 1. Exec 형식으로 기술
 RUN 명령과 같음
-<pre><code> ENTRYPOINT ["nginx", "-g", "daemon off;"]
+<pre><code> ENTRYPOINT ["nginx", "-g", "daemon off;"] </code></pre>
+
 > 2. Shell형식으로 기술
 RUN 명령과 같음
 <pre><code> ENTRYPOINT nginx -g 'daemon off;' </code></pre>
