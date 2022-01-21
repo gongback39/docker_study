@@ -221,4 +221,19 @@ ENTRYPOINT 명령과 CMD명령의 차이는 docker container run 명령 실행 �
 
 CMD의 경우: 컨테이너 시작 시에 길행하고 싶은 명령을 정의해도 docker container run 명령실행 시에 인수로 새로운 명령을 지정한 경우 이것을 우선 실행
 
-ENTRYPOINT 명령에서 지정한 명령ㅇ은 반드시 컨테이너에서 실행.
+ENTRYPOINT 명령에서 지정한 명령은 반드시 컨테이너에서 실행.
+
+ENTRYPOINT 명령으로는 실행하고 싶은 명령 자체를 지정하고 CMD명령으로는 그 명령의 인수를 지정하면 컨테이너를 실행했을때의 기본 작동을 결정할 수 있음.
+
+<pre><code> ENTRYPOINT ["top"]
+CMD ["-d", "10"] </code></pre>
+
+ENTRYPOINT명령으로 top명령을 실행하고 CMD명령으로 갱신간격인 -d 옵션을 10초로 지정합니다.
+
+이때 CMD에서 지정한 옵션을 사용하여 실행 시의 인수를 임의로 docker contianer run 명령 실행 시로 지정할 수 있음
+
+위의 dockerfile을 바탕으로 sample이라는 이미지를 작성하고 docker container run 명령을 실행해보면
+> CMD에서 지정한 10초 간격으로 갱신하는 경우
+<pre><code>$ docker container run -it sample
+> 2초 간격으로 갱신하는 경우
+<pre><code>$ docker container run -it smaple -d 2 </code></pre>
