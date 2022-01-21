@@ -42,7 +42,7 @@ SHELL|기본 쉘 설정
 
 주석의 경우 줄 맨 앞에 #을 붙임
 
-####dockerfile 작성
+#### dockerfile 작성
 dockerfile에는 'docker컨테이너를 어떤 docker이미지로부터 생성해야할지'라는 정보를 반드시 기술해야함
 
 이 이미지를 베이스 이미지라고 함
@@ -52,7 +52,7 @@ FROM [이미지명]:[태크명]
 FROM [이미지명]@[다이제스트]</code></pre>
 
 ## docker의 빌드와 이미지 레이어
-####dockerfile로부터 docker 이미지 만들기
+#### dockerfile로부터 docker 이미지 만들기
 <pre><code>docekr build -t [생성할 이미지명]:[태그명] [dockerfile의 위치]</code></pre>
 
 >예시
