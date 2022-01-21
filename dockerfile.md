@@ -237,6 +237,6 @@ ENTRYPOINT명령으로 top명령을 실행하고 CMD명령으로 갱신간격인
 
 위의 dockerfile을 바탕으로 sample이라는 이미지를 작성하고 docker container run 명령을 실행해보면
 > CMD에서 지정한 10초 간격으로 갱신하는 경우
-<pre><code>$ docker container run -it sample
+<pre><code>$ docker container run -it sample </code></pre>
 > 2초 간격으로 갱신하는 경우
 <pre><code>$ docker container run -it smaple -d 2 </code></pre>
