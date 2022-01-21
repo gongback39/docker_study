@@ -215,7 +215,7 @@ RUN 명령과 같음
 <pre><code> ENTRYPOINT ["nginx", "-g", "daemon off;"]
 > 2. Shell형식으로 기술
 RUN 명령과 같음
-<pre><code> ENTRYPOINT nginx -g 'daemon off;'
+<pre><code> ENTRYPOINT nginx -g 'daemon off;' </code></pre>
 
 ENTRYPOINT 명령과 CMD명령의 차이는 docker container run 명령 실행 시의 동작에 있음.
 
