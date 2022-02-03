@@ -241,3 +241,10 @@ ENTRYPOINT명령으로 top명령을 실행하고 CMD명령으로 갱신간격인
 <pre><code>$ docker container run -it sample </code></pre>
 > 2초 간격으로 갱신하는 경우
 <pre><code>$ docker container run -it smaple -d 2 </code></pre>
+
+#### 빌드완료 후에 실행되는 명령(ONBUILD 명령)
+ONBUILD명령은 그 다음 빌드에서 실행할 명령을 이미지 안에 설정하기 위한 명령
+<pre><code> ONBUILD [실행하고 싶은 명령] </code></pre>
+ONBUILD명령은 자신의 Dockerfile로부터 생성한 이미지를 베이스 이미지로 한 다른 Dockerfile을 빌드할 때 실행하고 싶은 명령을 기술
+
+<img src="./img/docker onbuild.jpg" width="600" height="300">
