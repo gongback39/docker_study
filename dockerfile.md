@@ -249,3 +249,80 @@ ONBUILD명령은 그 다음 빌드에서 실행할 명령을 이미지 안에 �
 ONBUILD명령은 자신의 Dockerfile로부터 생성한 이미지를 베이스 이미지로 한 다른 Dockerfile을 빌드할 때 실행하고 싶은 명령을 기술
 
 <img src="./img/docker onbuild.jpg" width="600" height="300">
+
+#### 시스템 콜 시그널의 설정(STOPSIGNAL 명령)
+컨테이너를 종료할때 송신하는 시그널을 설정함.
+<pre><code> STOPSIGNAL [시그널] </code></pre>
+STOPSIGNAL 명령에는 시그널 번호 또는 시그널명을 지정할 수 있음
+
+#### 컨테이너 헬스 체크 명령(HEALTHCHECK 명령)
+컨테이너 안의 프로세스가 정상적으로 작동하고 있는지를 체크.
+<pre><code> HEALTHCHECK [옵션] CMD 실행할 명령 </code></pre>
+지정할 수 있는 옵션 
+옵션|설명|기본값
+:---:|:---:|:---:
+--interval=n|헬스 체크 간격|30s
+--timeout=n|헬스 체크 타임 아웃|30s
+--retries=N|타임아웃 횟수|3
+
+HEALTHCHECK 명령에서는 Docker에 대해 컨테이너의 상태를 어떻게 확인할지를 설정
+
+헬스 체크의 결과는 docker containerinspect명령으로 확인할 수 있음
+
+## 환경 및 네트워크 
+dockerfile 안에서 이용할 수 있는 환경변수나 컨테이너 안에서의 작업 디렉토리를 지정할 수 있음.
+이를 구현하는 명령에 대해 설명
+
+#### 환경변수 설정(ENV 명령)
+dockerfile안에서 환경변수를 설정하고 싶을떄는 ENV명령을 사용. 
+<pre><code>ENV [key] [value]</code></pre>
+<pre><code>ENV [key[=[value]</code></pre>
+
+1. key value형으로 지정하는 경우
+단일 환경 변수에 ㅎ나이 값을 설정.
+
+첫 공백 앞을 key로 설정하면 그 이후는 공백이나 따옴표와 같은 문자가 포함되어도 모두 문자열로서 취급
+<pre><code>ENV myName "shiho ASA"
+ENV myOrder Gin Whisky calvados
+ENV myNickName miya
+</code></pre>
+
+2. key=value로 지정하는 경우
+한번에 여러개의 값을 설정하때
+<pre><code>ENV myName="shiho ASA"
+ myorder=Gin\ whiskey\ Calvados\
+ myNickName=miya</code></pre>
+ 
+여기서 하나의 ENV명령으로 여러개의 값을 설정하므로 만들어지는 Docker이미지는 
+
+변수 앞에 \를 추가하면 이스케이프 처리를 할 수 있음.
+
+ENV명령으로 지정한 환경변수는 컨테이너 실행 시의 dockercontainer run명령의 --env 옵션을 사용하면 변경 가능.
+
+#### 작업 디렉토리 지정(WORKDIR 명령)
+dockerfile에서 정의한 명령을 실행하기 위한 작업용 디렉토리를 지정
+<pre><code> WORKDIR [작업 디렉토리 경로]</code></pre>
+WORKDIR명령은 DOckerfile에 쓰여있는 다음과 같은 명령을 실행하기 위한 작업용 디렉토리를 지정
+ - RUN 명령
+ - CMD 명령
+ - ENTRYPOINT 명령
+ - COPY 명령
+ - ADD 명령
+ 
+만일 지정한 디렉토리가 존재하지 않으면 새로 작성.
+
+#### 사용자 지정(USER명령)
+이미지 실행이나 Dockerfile의 다음과 같은 명령을 실행하기 위한 사용자를 지정할 때는 USER명령을 사용
+ - RUN 명령
+ - CMD 명령
+ - ENTRYPOINT명령
+<pre><code> USER [사용자명/UID] </code></pre>
+
+USER 명령에서 지정하는 사용자는 RUN 명령으로 미리 작성해 놓을 필요가 있다는 점에 주의
+*  USER명령의 예
+<pre><code>RUN ["adduser", "asa"]
+RUN ["whoami"]
+USER asa
+RUN ["whoami"]
+
+#### 라벨 지정 (LABEL 명령)
