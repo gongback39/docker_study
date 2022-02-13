@@ -320,3 +320,22 @@ Dockerfile 안에서 사용할 변수를 정의할 때는 사용.<br/>
 ARG YOURNAME="asa"
 RUN echo $YOURNAME</code></pre>
 또한 Dockerfile을 빌드 할때 <code>--build-arg</code>옵션을 붙여 ARG명령에서 지정한 YOURNAME에 새로운 값을 지정 가능
+
+#### 기본 쉘 설정(SHELL 명령)
+쉘 형식으로 명령을 실행할때 기본 쉘을 설정하는데 사용.
+<pre><code> SHELL ["쉘의 경로", "파라미터"]<br/>
+* 예시
+<pre><code># 기본 쉘을 /bin/bash로 변경
+SHELL ["/bin/bash", "-c"]</code></pre>
+> linux의 기본 쉘은 ["/bin/bash","-c"] <br/>
+SHELL 명령을 지정하면 그 쉘은 그 이후에 Docekrfile안에서 SHELL형식으로 지정한 RUN, CMD, ENTRYPOINT명령에서 유효.
+
+## 파일 설정
+Dockerfile에서 파일을 다룰 떄 사용한는 명령
+#### 파일 및 디렉토리 추가 (ADD명령)
+이미지에 호스트사으이 파일이나 디텍토리를 추가할떄 사용
+<pre><code> ADD <호스트의 파일 경로> <Docker 이미지의 파일 경로></code></pre>
+<pre><code> SDD ["<호스트 파일 경로>" "<Docker 이미지의 파일 경로>"] </coed></pre>
+ADD명령은 호스트상의 팡리이나 디렉토리, 원격 파일을 Docker이미지 안으로 복사.
+* ADD명령에 사용하는 패턴 예
+<pre><code>
