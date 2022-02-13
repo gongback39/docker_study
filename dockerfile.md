@@ -344,4 +344,10 @@ ADD hos* /docker_dir/
 # [hos]+임의의 한 문자 룰에 해당하는 파일을 추가
 ADD hos?.txt /docker_dir/</code></pre>
 <br />
-이미지에 추가하고 싶은 파일이 원격파일 URL인 경우 URL을 다운로드하여 DOCKER이미지 안의파일 경로로 퍼미션이 600인 파일이 
+이미지에 추가하고 싶은 파일이 원격파일 URL인 경우 URL을 다운로드하여 DOCKER이미지 안의파일 경로로 퍼미션이 600인 파일이 추가됨
+
+#### 파일 복사(COPY 명령)
+이미지에 호스트 상의 파일이나 디렉토리를 복사할때 사용
+<pre><code>COPY <호스트의 파일 경로> <Dockeer 이미지의 파일 경로></code></pre>
+<pre><code>COPY ["<호스트의 파일 경로>" "<Docker 이미지의 파일 경로>"]</code></pre>
+
