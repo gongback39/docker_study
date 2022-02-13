@@ -323,11 +323,12 @@ RUN echo $YOURNAME</code></pre>
 
 #### 기본 쉘 설정(SHELL 명령)
 쉘 형식으로 명령을 실행할때 기본 쉘을 설정하는데 사용.
-<pre><code> SHELL ["쉘의 경로", "파라미터"]<br/>
+<pre><code> SHELL ["쉘의 경로", "파라미터"]</code></pre><br/>
 * 예시
 <pre><code># 기본 쉘을 /bin/bash로 변경
 SHELL ["/bin/bash", "-c"]</code></pre>
-> linux의 기본 쉘은 ["/bin/bash","-c"] <br/>
+> linux의 기본 쉘은 ["/bin/bash","-c"]
+
 SHELL 명령을 지정하면 그 쉘은 그 이후에 Docekrfile안에서 SHELL형식으로 지정한 RUN, CMD, ENTRYPOINT명령에서 유효.
 
 ## 파일 설정
@@ -335,7 +336,12 @@ Dockerfile에서 파일을 다룰 떄 사용한는 명령
 #### 파일 및 디렉토리 추가 (ADD명령)
 이미지에 호스트사으이 파일이나 디텍토리를 추가할떄 사용
 <pre><code> ADD <호스트의 파일 경로> <Docker 이미지의 파일 경로></code></pre>
-<pre><code> SDD ["<호스트 파일 경로>" "<Docker 이미지의 파일 경로>"] </coed></pre>
+<pre><code> ADD ["<호스트 파일 경로>" "<Docker 이미지의 파일 경로>"] </code></pre>
 ADD명령은 호스트상의 팡리이나 디렉토리, 원격 파일을 Docker이미지 안으로 복사.
 * ADD명령에 사용하는 패턴 예
-<pre><code>
+<pre><code>#[hos]로 시작하는 모든 파일을 추가
+ADD hos* /docker_dir/
+# [hos]+임의의 한 문자 룰에 해당하는 파일을 추가
+ADD hos?.txt /docker_dir/</code></pre>
+<br />
+이미지에 추가하고 싶은 파일이 원격파일 URL인 경우 URL을 다운로드하여 DOCKER이미지 안의파일 경로로 퍼미션이 600인 파일이 
