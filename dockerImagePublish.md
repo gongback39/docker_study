@@ -20,18 +20,19 @@ GitHub상의 Dockerfile을 바탕으로 하여 DockerHub에서 이미지를 생�
 먼저 Docker Hub에 로그인한 상태에서 create 버튼을 클릭, 리스트 메뉴에서 create automarted build를 클릭, 그다음 Dockerfile이 공개되어 있는 GitHub 계정을 선택.<br/>
 계정을 선택하면 공개되어 있는 소스토드의 리포지토리가 표시되므로 리포지토리를 선택.<br/>
 
-그 다음 만들 Docker 이미지의 정보를 등록하는 화면이 나오므로 다음과 같이 필요한 정보를 등록
+그 다음 만들 Docker 이미지의 정보를 등록하는 화면이 나오므로 다음과 같이 필요한 정보를 등록<br /><br />
 1. Repository Namespace & Name(필수)<br />
 Docker 이미지의 이름공간이 됨. 요기서는 로그인 계정을 선택<br />
 Docker Hub에서 이미지를 공개할 때의 이름.
-<br />
+<br /><br />
 2. Visibility(필수)<br />
 Public으로 설정하면 Docker 이미지가 공개되어 누구나 이용할 수 있음.<br />
 Private으로 설정하면 한정된 멤버만 이용할 수 있음
-<br />
+<br /><br />
 3. Short Description(필수)<br />
 이미지에 대한 간단한 설명을 기술
 <br /> <br />
+
 설정이 끝나면 create버튼을 클릭함. 리포지토리 화면으로 이동하므로 거기서 Build Settings를 클릭.<br/>
 여기서 Docker이미지의 태그를 설정하고 Trigger버튼을 클릭하면 빌드가 시작됨.<br/>
 빌드의 진척 상황은 Build Details탭에서 확인할 수 있음
@@ -43,3 +44,4 @@ Private으로 설정하면 한정된 멤버만 이용할 수 있음
 이것으로 DockerHub의 Automated Build기능을 사용하여 dockertext-cavityflow라는 이름의 이미지가 생성되고 인터넷 상에서 공유됨.
 
 #### Docker 이미지 확인
+이제 작성한 Docker이미지를 확인하고, 이미지를 사용하여 컨테이너를 실
