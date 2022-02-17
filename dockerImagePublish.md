@@ -82,4 +82,20 @@ Dcokerfile을 <code> docekr build</code>명령으로 빌드하여 도커 이미�
 localhost의 포트에서 작동하는 레지스트리에 이미지가 등록됨.
 
 #### Dcoker 이미지의 다운로드와 작동 확인
-프라이빗 레지스트리상에 있는 이미지를 로컬 환경으로 다운로드하려면 <code>docker image pull</code> 명령을 실행
+프라이빗 레지스트리상에 있는 이미지를 로컬 환경으로 다운로드하려면 <code>docker image pull</code> 명령을 실행<br/>
+<pre><code> docker image pull localhost:5050/docker-jupyter</code></pre>
+작동확인을 위해 <code>docker container run</code>명령을 실행해 프라이빗 레지스트리로부터 다운로드한 이미지를 사용하여 컨테이너를 시작.
+<pre><code>docker container fun -it -p 8888:8888 localhost:5050/docker-jupyter</code></pre>
+브라우저에서 콘솔에 표시된 URL을 열면 프로그램이 작동함을 알 수 있음.
+
+## 클라우드 서비스를 사용한 프라이빗 레지스트리 구축
+docker 이미지는 개발 환경 및 실행모듈을 포함하기 때문에 용량이 큼, 그래서 클라이언트 PC나 온프레미스 환경에서 관리하면 비용과 시간이 많이 듦.<br/>
+퍼블릭 클라우드에는 Docker이미지를 프라이빗으로 관리할 수 있는 매니지드 서비스가 제공되므로 이용하는 것이 좋음.
+
+#### Google Container Registry 준비하기
+Google Container Registry를 이용하려면 API사용을 허가해야함.<br/>
+브라우저에서 GCP의 웹콘솔에 로그인하고 [API 및 서비스]->[라이브러리]를 선택.<br/>
+여기서 Google Container Registry를 검색하여 API 설정을 엶.<br/>
+Google Container Registry 액세스 권한 설정 화면이 표시되면 [사용설정]버튼을 클릭하므로써 웹 콘솔에서의 사전 준비가 끝남.
+
+####
