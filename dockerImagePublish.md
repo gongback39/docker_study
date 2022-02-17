@@ -98,4 +98,23 @@ Google Container Registry를 이용하려면 API사용을 허가해야함.<br/>
 여기서 Google Container Registry를 검색하여 API 설정을 엶.<br/>
 Google Container Registry 액세스 권한 설정 화면이 표시되면 [사용설정]버튼을 클릭하므로써 웹 콘솔에서의 사전 준비가 끝남.
 
-####
+#### Docker 이미지의 업로드
+Google Container Registry에 업로드 하기 위해서는 다음과 같은 규칙으로 이미지에 태그를 붙여야함.
+<pre><code>docker tag [로컬의 이미지명] [Google Container Registry의 호스트명]/[프로젝트 ID]/[이미지명]</code></pre>
+Google Container Registry의 호스트명은 이미지의 저장 위치에 따라 다음 세 개 중 하나를 선택.
+* us.gcr.io 미국
+* eu.gcr.io 유럽
+* aisa.gcr.io 아시아
+<code>docker image ls</code>명령을 사용하여 이미지를 확인할 수 있음<br/>
+태그를 서러정한 이미지를 Google Container Registry에 업로드하려면 <code>gcloud</code>명령을 사용.<br/>
+*<code>gcloud</code>명령으로 Docker를 조작할때는 명령 옵션으로 --이 필요<br/>
+<pre><code>gcloud docker -- push asia.gcr.io/[]/[]</code></pre>
+또한 클라이언트 pc에서 gcloud명령을 실행하려면 Google Cloud SDK를 설치하고 인증 받아야 함.<br/>
+이미지가 업로드되었는지 아닌지는 GCP의 웹콘솔에서 [홈]->[Container Registry]를 클릭하여 확인.<br/>
+이미지 업로드가 완료되었으므로 로컬에 저장되어 있는 이미지는 <code>docker image rm</code>를 통해 삭제.
+
+#### Docker 이미지의 다운로드와 작동 확인
+Google Container Registry 상에 있는 이미지를 로컬 환경으로 다운로드 하려면 <code>gcloud</code>명령을 실행<br/>
+<pre><code>gcloud docker --pull asia.gcr.io/[]/[]</code></pre>
+작동확인을 위해 <code>docker container run</code>명령을 사용
+<pre><code>docker container run -it -p 8888:8888 asia.gcr.io/[]/[]</code></pre>
