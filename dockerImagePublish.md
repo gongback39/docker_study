@@ -44,4 +44,19 @@ Private으로 설정하면 한정된 멤버만 이용할 수 있음
 이것으로 DockerHub의 Automated Build기능을 사용하여 dockertext-cavityflow라는 이름의 이미지가 생성되고 인터넷 상에서 공유됨.
 
 #### Docker 이미지 확인
-이제 작성한 Docker이미지를 확인하고, 이미지를 사용하여 컨테이너를 실
+먼저 DockerHub에서 이미지를 다운로드함. 
+<pre><code> docker image pull [docker ID]/[container name]-[tag]</code></pre>
+<br/>
+DockerHub에서 다운로드한 파일을 <code> docker image ls</code> 명령을 사용하여 확인<br/>
+상세정보를 확인하려면 <code> docker image inspect</code>명령을 실행.<br/>
+<br/><br/>
+## Docker Registry를 사용한 프라이빗 레지스트리 구축
+Docker 이미지에는 인터넷상에 공개하고 싶지 않은 정보가 포함되는 경우도 있음.<br/>
+Docker이미지를 일원관리하기 위한 레지스틔를ㄹ 로컬 화ㄴ경에 구축하여 관리하는 방법에 대해 살펴볼거임.
+
+#### 로컬 환경에 Docker 레지스트리 구축
+Docker 레지스트리를 프라이빗 네트워크 안에서 구축하기 위해 Docker Store에 공개되어 있는 이미지인 registry를 사용.<br/>
+*registry는 Version 0계열과 Version 2계열이 있으며, Version 0계열은 Python으로 2는 Go언어로 구축되어 있으며, 둘이 호환되지 않으므로 특졀한 요구 사랑이 없는경우 Version 2를 사용<br/>
+<br/>
+registry를 <code>docker image pull</code> 명령을 사용하여 로컬 환경에 다운로드함.<br/>
+그 다음 다운로드한 registry이미지를 바탕으로 레지스트리용 컨테이너를 시작함(<code>docker container rum</code>).
