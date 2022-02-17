@@ -49,14 +49,37 @@ Private으로 설정하면 한정된 멤버만 이용할 수 있음
 <br/>
 DockerHub에서 다운로드한 파일을 <code> docker image ls</code> 명령을 사용하여 확인<br/>
 상세정보를 확인하려면 <code> docker image inspect</code>명령을 실행.<br/>
-<br/><br/>
+<br/>
+
 ## Docker Registry를 사용한 프라이빗 레지스트리 구축
 Docker 이미지에는 인터넷상에 공개하고 싶지 않은 정보가 포함되는 경우도 있음.<br/>
 Docker이미지를 일원관리하기 위한 레지스틔를ㄹ 로컬 화ㄴ경에 구축하여 관리하는 방법에 대해 살펴볼거임.
 
 #### 로컬 환경에 Docker 레지스트리 구축
 Docker 레지스트리를 프라이빗 네트워크 안에서 구축하기 위해 Docker Store에 공개되어 있는 이미지인 registry를 사용.<br/>
+
 *registry는 Version 0계열과 Version 2계열이 있으며, Version 0계열은 Python으로 2는 Go언어로 구축되어 있으며, 둘이 호환되지 않으므로 특졀한 요구 사랑이 없는경우 Version 2를 사용<br/>
 <br/>
 registry를 <code>docker image pull</code> 명령을 사용하여 로컬 환경에 다운로드함.<br/>
-그 다음 다운로드한 registry이미지를 바탕으로 레지스트리용 컨테이너를 시작함(<code>docker container rum</code>).
+그 다음 다운로드한 registry이미지를 바탕으로 레지스트리용 컨테이너를 시작함(<code>docker container rum</code>).<br/>
+<code>docker container ls</code>명령을 사용하여 컨테이너의 시작을 확인하므로써 프라이빗 레지스트리가 구축됨.
+
+#### Docker 이미지 업로드
+업로드하기 위한 이미지를 만들려면 다음과 같은 Dockerfile을 만듦.<br />
+다음 샘플에서는 Jupyter Notebook의 베이스 이미지에 Numpy/Scipy/Matplotlib라는 4개의 라이브러리를 설치
+<pre><code>FROM jupyter/base-notebook
+
+ENV CONDA_DIR=/opt/conda
+
+RUN conda install --quiet --yes \
+        'numpy=1.13.*'\...
+</code></pre>
+<br/>
+Dcokerfile을 <code> docekr build</code>명령으로 빌드하여 도커 이미지를 만듦.<br/>
+프라이빗 네트워크 안의 Docker레지스트리에 업로드하려면 다음 규칙을 사용하여 이미지에 태그를 붙여야함.
+<pre><code> docker image tag [로컬의 이미지명] [업로드할 레지스트리의 주소:포트번호]/[이미지명]</code></pre>
+이것으로 이미지 업로드가 완료되었으므로 로컬에 저장되어 있는 이미지를 <code>docker image rm</code>를 사용해 삭제.<br/>
+localhost의 포트에서 작동하는 레지스트리에 이미지가 등록됨.
+
+#### Dcoker 이미지의 다운로드와 작동 확인
+프라이빗 레지스트리상에 있는 이미지를 로컬 환경으로 다운로드하려면 <code>docker image pull</code> 명령을 실행
